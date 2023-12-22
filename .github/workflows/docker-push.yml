@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -28,7 +30,9 @@ jobs:
           poetry install
 
           echo "::set-output name=VERSION::$(
-            poetry version | awk '{print $2}'
+            poetry version | 
+            awk '{print $2}' | 
+            awk -F'.' '{print $1"."$2"."$3}'
           )"
       - name: Build and push
         uses: docker/build-push-action@v5
