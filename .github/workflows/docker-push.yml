@@ -18,10 +18,22 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Gather poetry dynamic version
+        id: poetry-version
+        run: |
+          pip install poetry poetry-dynamic-versioning
+          poetry install
+
+          echo "::set-output name=VERSION::$(
+            poetry version | awk '{print $2}'
+          )"
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           file: build/docker/Dockerfile
-          tags: d33bs/wintry:latest
+          tags: d33bs/wintry:latest,d33bs/wintry:${{ steps.poetry-version.outputs.VERSION }}
