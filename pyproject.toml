@@ -4,7 +4,7 @@ version = "0.0.0"
 description = ""
 authors = ["d33bs <dave.bunten@cuanschutz.edu>"]
 readme = "README.md"
-packages = [{include = "src/wintry"}]
+packages = [{include = "wintry", from="src"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
