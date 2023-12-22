@@ -16,5 +16,5 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Try to build docker image
-        run: | 
+        run: |
           docker build -f build/docker/Dockerfile -t wintry:latest .
