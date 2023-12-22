@@ -26,8 +26,8 @@ jobs:
       - name: Gather poetry dynamic version
         id: poetry-version
         run: >-
-          pip install poetry poetry-dynamic-versioning
-          poetry install
+          pip install poetry poetry-dynamic-versioning &&
+          poetry install &&
           VERSION=$(
             poetry version |
             awk '{print $2}' |
