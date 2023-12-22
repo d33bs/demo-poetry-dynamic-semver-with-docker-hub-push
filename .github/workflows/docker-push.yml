@@ -23,7 +23,7 @@ jobs:
           python-version: "3.10"
       - name: Gather poetry dynamic version
         id: poetry-version
-        run: |
+        run: >-
           pip install poetry poetry-dynamic-versioning
           poetry install
 
