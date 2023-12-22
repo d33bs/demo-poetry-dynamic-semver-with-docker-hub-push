@@ -28,12 +28,12 @@ jobs:
         run: >-
           pip install poetry poetry-dynamic-versioning
           poetry install
-
-          echo "::set-output name=VERSION::$(
-            poetry version | 
-            awk '{print $2}' | 
+          VERSION=$(
+            poetry version |
+            awk '{print $2}' |
             awk -F'.' '{print $1"."$2"."$3}'
-          )"
+          )
+          echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
