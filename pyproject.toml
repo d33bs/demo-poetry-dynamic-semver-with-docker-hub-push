@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "wintry"
+version = "0.0.0"
+description = ""
+authors = ["d33bs <dave.bunten@cuanschutz.edu>"]
+readme = "README.md"
+packages = [{include = "src/wintry"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+cowsay = "^6.1"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+style = "pep440"
+vcs = "git"
+
+[build-system]
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
+build-backend = "poetry_dynamic_versioning.backend"
+
+[tool.setuptools_scm section]
