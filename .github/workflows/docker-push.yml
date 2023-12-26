@@ -1,8 +1,9 @@
 name: docker-push
 
 on:
-  pull_request:
-    branches: ['main']
+  release:
+    types:
+      - published
 
 jobs:
   docker-push:
@@ -41,3 +42,9 @@ jobs:
           push: true
           file: build/docker/Dockerfile
           tags: d33bs/wintry:latest,d33bs/wintry:${{ steps.poetry-version.outputs.VERSION }}
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          repository: d33bs/wintry
