@@ -3,8 +3,6 @@ name: docker-build-check
 on:
   pull_request:
     branches: ['main']
-    paths:
-      - build/docker/**
 
 jobs:
   docker-build-check:
@@ -18,3 +16,6 @@ jobs:
       - name: Try to build docker image
         run: |
           docker build -f build/docker/Dockerfile -t wintry:latest .
+      - name: Run tests through docker image
+        run: |
+          docker run wintry:latest poetry run pytest

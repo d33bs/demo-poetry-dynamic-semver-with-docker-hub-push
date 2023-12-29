@@ -10,6 +10,9 @@ packages = [{include = "wintry", from="src"}]
 python = "^3.9"
 cowsay = "^6.1"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+
 [tool.poetry-dynamic-versioning]
 enable = true
 style = "pep440"
