@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir poetry poetry-dynamic-versioning
 
 COPY . .
 
-RUN poetry install --no-interaction --no-dev
+RUN poetry install --no-interaction
 
 # hadolint ignore=DL3059
 RUN echo 'alias python="poetry run python"' >> ~/.bashrc
