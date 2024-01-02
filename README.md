@@ -13,4 +13,4 @@ As part of this work, we do the following:
 
 Docker Hub repository: [https://hub.docker.com/r/d33bs/wintry](https://hub.docker.com/r/d33bs/wintry)
 
-Source code: [https://github.com/d33bs/demo-poetry-dynamic-semver-with-docker-hub-push](https://github.com/CU-DBMI/demo-poetry-dynamic-semver-with-docker-hub-push)
+Source code: [https://github.com/CU-DBMI/demo-poetry-dynamic-semver-with-docker-hub-push](https://github.com/CU-DBMI/demo-poetry-dynamic-semver-with-docker-hub-push)
