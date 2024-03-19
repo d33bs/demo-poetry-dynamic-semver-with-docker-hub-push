@@ -1,6 +1,11 @@
 name: docker-push
 
 on:
+  schedule:
+    # runs every Wednesday at 7 AM UTC
+    - cron: "0 7 * * 3"
+  push:
+    branches: [updates]
   release:
     types:
       - published
@@ -31,11 +36,34 @@ jobs:
           poetry install &&
           VERSION=$(
             poetry version |
-            awk '{print $2}' |
-            awk -F'.' '{print $1"."$2"."$3}'
+            awk '{print $2}'
           ) &&
           echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
-      - name: Build and push
+      - name: Set current date as env variable
+        id: date-tag
+        if: github.event_name == 'schedule'
+        run: TAG="$(date +'%y%m%d')" >> "$GITHUB_OUTPUT"
+      # Docker image push based on weekly schedule
+      - name: Schedule-based docker image push
+        if: github.event_name == 'schedule'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          file: build/docker/Dockerfile
+          tags: d33bs/wintry:${{ steps.poetry-version.outputs.VERSION }}_${{ steps.date-tag.outputs.TAG }}
+      # Docker image push based on GitHub pushes to main
+      - name: Push-based docker image push
+        if: github.event_name == 'push'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          file: build/docker/Dockerfile
+          tags: d33bs/wintry:${{ steps.poetry-version.outputs.VERSION }}
+      # Docker image push based on GitHub release publish
+      - name: Release-based docker image push
+        if: github.event_name == 'release'
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -43,6 +71,7 @@ jobs:
           file: build/docker/Dockerfile
           tags: d33bs/wintry:latest,d33bs/wintry:${{ steps.poetry-version.outputs.VERSION }}
       - name: Docker Hub Description
+        if: github.event_name == 'push' || github.event_name == 'release'
         uses: peter-evans/dockerhub-description@v3
         with:
           username: ${{ secrets.DOCKER_USER }}
