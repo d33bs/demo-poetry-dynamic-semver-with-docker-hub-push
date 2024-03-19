@@ -29,6 +29,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
+      # Gather and prepare the dynamic version for use with docker tags.
+      # For example, 1.1.0.post6.dev0+bc093ef becomes 1.1.0.post6.dev0_bc093ef
       - name: Gather poetry dynamic version
         id: poetry-version
         run: >-
@@ -36,7 +38,8 @@ jobs:
           poetry install &&
           VERSION=$(
             poetry version |
-            awk '{print $2}'
+            awk '{print $2}' |
+            tr '+' '_'
           ) &&
           echo "VERSION=$VERSION" >> "$GITHUB_OUTPUT"
       - name: Set current date as env variable
