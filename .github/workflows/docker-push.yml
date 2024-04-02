@@ -11,6 +11,12 @@ jobs:
   docker-push:
     runs-on: ubuntu-latest
     steps:
+      - name: Print Variables
+        run: |
+          echo "GitHub Event: ${GITHUB_EVENT_NAME}"
+          echo "GitHub Repository: ${GITHUB_REPOSITORY}"
+          echo "GitHub Event Pull Request Merged: ${GITHUB_EVENT_PULL_REQUEST_MERGED}"
+          echo "GitHub Ref: ${GITHUB_REF}"
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
